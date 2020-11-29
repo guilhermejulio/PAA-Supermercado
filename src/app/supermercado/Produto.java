@@ -24,7 +24,7 @@ import java.util.Random;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-public class Produto{
+public class Produto implements Comparable{
     // static Random sorteio = new Random(42);                  //--> fixo
     static Random sorteio = new Random(System.nanoTime());   //--> aleatório 
     static final int PESOMAX = 50;
@@ -60,6 +60,38 @@ public class Produto{
         return "Codigo do Produto: "+this.codigo+" | Peso: "+this.peso+" kg | Valor: R$ "+this.valor;
     }
 
+
+    /**
+     * Compare TO, baseado no peso e no valor
+     * 
+     * Se um produto tem seu valor e peso menor ou igual a outro, 
+     * Significa que o produto é mais barato e mais leve
+     * 
+     * Porém se o valor é menor, e o peso maior, ocorre um 'empate'
+     * O produto é mais barato, porém não é mais leve
+     * @param o
+     * @return
+     */
+    @Override
+    public int compareTo(Object o) {
+        Produto outro = (Produto) o;
+
+        if(this.valor < outro.valor){
+            if(this.peso <= outro.peso) return -1;
+            else return 0;
+        }else{
+            if(this.valor > outro.valor){
+                if(this.peso >= outro.peso) return 1;
+                else return 0;
+            }
+        }
+
+
+        return 0;
+    }
+
+
+    
     
 
     
