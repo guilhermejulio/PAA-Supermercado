@@ -110,6 +110,8 @@ public class ForcaBruta {
 
         StringBuffer logTempo = new StringBuffer();
 
+        long tempoInicial = System.nanoTime();
+
         // Combinações para itens isolados.
         for (Produto p : produtos) {
             ListaProdutos aux = new ListaProdutos();
@@ -120,8 +122,6 @@ public class ForcaBruta {
 
         // Sequencia do força bruta, combinação dos itens com os subsequentes.
         boolean gerouTodasPossibilidades = false;
-
-        long tempoInicial = System.nanoTime();
 
         while (!gerouTodasPossibilidades) {
 
@@ -267,7 +267,7 @@ public class ForcaBruta {
     }
     // #endregion
 
-    // #region Gravar Instancias
+    // #region Gravar em Arquivo
     /**
      * Metodo para gravar instancia em arquivo texto, facilitando a visualização
      * 
@@ -292,9 +292,8 @@ public class ForcaBruta {
             e.printStackTrace();
         }
     }
-    // #endregion
+    
 
-    // #region Gravar maior conjunto
     /**
      * Metodo para gravar o item B da investigação -> maior conjunto no tempo de 5s
      * 

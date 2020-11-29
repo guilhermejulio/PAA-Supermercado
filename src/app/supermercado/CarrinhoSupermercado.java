@@ -34,6 +34,19 @@ public class CarrinhoSupermercado {
         return false;
     }
 
+    public boolean cabeNoCarrinho(Produto p){
+        if(listaProdutos.peso + p.peso <=pesomax){
+            if(listaProdutos.valor + p.valor <= orcamento)
+                return true;
+        }
+
+        return false;
+    }
+
+    public void adicionarProduto(Produto p){
+        listaProdutos.adicionarProduto(p);
+    }
+
     public void trocarLista(ListaProdutos lista){
         listaProdutos = new ListaProdutos(lista);
     }

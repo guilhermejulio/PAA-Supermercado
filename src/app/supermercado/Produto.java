@@ -25,8 +25,8 @@ import java.util.Random;
  * SOFTWARE.
  */
 public class Produto implements Comparable{
-    // static Random sorteio = new Random(42);                  //--> fixo
-    static Random sorteio = new Random(System.nanoTime());   //--> aleatório 
+    static Random sorteio = new Random(42);                  //--> fixo
+    // static Random sorteio = new Random(System.nanoTime());   //--> aleatório 
     static final int PESOMAX = 50;
     static final float VALMAX = 40f;
 
