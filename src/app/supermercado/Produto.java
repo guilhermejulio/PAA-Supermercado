@@ -38,7 +38,7 @@ public class Produto implements Comparable{
     public Produto(int codigo){
         this.codigo = codigo;
         this.peso = 1+sorteio.nextInt(PESOMAX);
-        this.valor = (float)(peso*2+sorteio.nextDouble()*VALMAX) ;
+        this.valor = Math.round((float)(peso*2+sorteio.nextDouble()*VALMAX)) ;
     }
 
     public Produto(Produto p){

@@ -9,7 +9,6 @@ import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 import app.supermercado.CarrinhoSupermercado;
-import app.supermercado.ListaProdutos;
 import app.supermercado.Produto;
 
 /* Maior quantidade de produtos
@@ -21,7 +20,7 @@ Criterio guloso:
 Escolha gulosa: Escolher o menor objeto possível (Condiderando Peso e Valor);
 */
 
-public class Guloso {
+final class Guloso {
 
     // #region Produtos (mochila + supermercado)
     static final int QUANTPROD = 50;
@@ -67,14 +66,14 @@ public class Guloso {
 
         int instancia = 4;
 
-        while (instancia <= 10000) {
+        while (instancia <= 1048576) {
             ArrayList<Produto> produtos = new ArrayList<Produto>(geraProduto(instancia));
 
             float orcamento = (float) criarOrcamento(produtos, PROPORCAOORCAMENTO);
             int pesomax = criarPesoMax(produtos, instancia - 1);
 
             CarrinhoSupermercado carrinho = new CarrinhoSupermercado(orcamento, pesomax);
-            executarGuloso(produtos,carrinho);
+            GDY(produtos,carrinho);
 
             instancia *= 2;
         }
@@ -93,23 +92,31 @@ public class Guloso {
      * @param produtos
      * @param carrinho
      */
-    public static void executarGuloso(ArrayList<Produto> produtos, 
+    public static void GDY(ArrayList<Produto> produtos, 
         CarrinhoSupermercado carrinho) {
 
         int tamInstancia = produtos.size();
         StringBuffer logTempo = new StringBuffer();
 
         long tempoInicial = System.nanoTime();
-        // 1º passo, ordenar produtos de acordo com a escolha gulosa
-        // Vide compareTo da classe Produto
-        produtos.sort(null);
+        
+        produtos.sort(null); // ==> Conjunto de candiadatos
 
-        // 2º passo, escolha otima atual do produto sem olhar para trás
-        // Se cabe adiciona, se não cabe passa pro proximo.
-        for (Produto p : produtos) {
-            if(carrinho.cabeNoCarrinho(p)) carrinho.adicionarProduto(p);
+        boolean resolveu = false; // ==> Função de solução
+        int i=0;
+
+        //==> Função de seleção escolha otima local do produto sem olhar para trás
+        while(!resolveu){
+
+            //Cabe no carrinho ==> Função de viabilidade
+            //Adicionar produto ==> Função objetivo
+            if(carrinho.cabeNoCarrinho(produtos.get(i))) carrinho.adicionarProduto(produtos.get(i));
+            else resolveu = true;
+
+            i++;
         }
         long tempoFinal = System.nanoTime();
+
 
         long tempo = tempoFinal - tempoInicial;
 
@@ -122,9 +129,6 @@ public class Guloso {
             logTempo.append("\nTempo de execução: " + tempo + " Segundo(s) \n\n");
         }
 
-        // Investigação B) --> Maior conjunto no tempo limite de 5segundos
-        if (tempo <= 5)
-            gravarMaiorConjunto(carrinho.getListaProdutos(), logTempo, tamInstancia);
 
         //gravar dados da execução 
         gravarInstancia(tamInstancia, carrinho, logTempo);
@@ -147,22 +151,6 @@ public class Guloso {
     
     }
 
-    private static void gravarMaiorConjunto(ListaProdutos listaProdutos, 
-        StringBuffer logTempo, int tamInstancia) {
-
-        String path = "src/app/algoritmos/log-guloso/Maior-Conjunto-5Segundos.txt";
-
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
-            bw.write("- Maior Conjunto Encontrado no Tempo limite de 5 segundos -");
-            listaProdutos.saveToFile(bw);
-            bw.write("\n" + logTempo.toString());
-            bw.write("\nTamanho da instancia onde foi obtido: " + tamInstancia);
-
-        } catch (final IOException e) {
-            e.printStackTrace();
-        }
-
-    }
 
     //  #endregion
 
@@ -196,16 +184,19 @@ public class Guloso {
                 switch (opcao) {
                     case 1:
                         System.out
-                                .println("\n\nO algoritmo será executado com instancias crescentes de X a Y produtos");
+                                .println("\n\nO algoritmo será executado com instancias crescentes de 4 a 1.048.576 produtos");
                         System.out.println(
                                 "\nPara cada instancia, o carrinho será salvo em arquivo TXT na pasta 'log-guloso' com o nome da instancia, exemplo: Instancia_XProdutos.txt");
                         System.out.println("\nOs dados de tempo de execução serão salvos no mesmo arquivo");
-                        System.out.println(
-                                "\nO maior conjunto no tempo limite de 5 segundos, também será escrito na mesma pasta");
-                        System.out.println("\n\nSe compreendeu, prescione <enter> para executar...");
+                        System.out.println("\nSe compreendeu, prescione <enter> para executar...");
                         teclado.nextLine();
 
                         instanciasCrescentes();
+                    break;
+
+                    default:
+                        System.out.println("\n\nAdeus!!");
+                    break;
                 }
 
             } while (opcao != 0);

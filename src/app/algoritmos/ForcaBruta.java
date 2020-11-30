@@ -12,7 +12,7 @@ import app.supermercado.CarrinhoSupermercado;
 import app.supermercado.ListaProdutos;
 import app.supermercado.Produto;
 
-public class ForcaBruta {
+final class ForcaBruta {
 
     // #region Produtos (mochila + supermercado)
     static final int QUANTPROD = 50;
