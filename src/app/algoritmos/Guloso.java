@@ -1,6 +1,7 @@
 package app.algoritmos;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -140,7 +141,7 @@ final class Guloso {
     private static void gravarInstancia(int tamInstancia, CarrinhoSupermercado carrinho, 
         StringBuffer logTempo) {    
         
-        String path = "src/app/algoritmos/log-guloso/Instancia_" + tamInstancia + "Produtos.txt";
+        String path = "log-guloso/Instancia_" + tamInstancia + "Produtos.txt";
 
         try(BufferedWriter bw = new BufferedWriter(new FileWriter(path))){
             carrinho.saveToFile(bw);
@@ -154,6 +155,13 @@ final class Guloso {
 
     //  #endregion
 
+    public static void criarPastaLog(){
+        File file = new File("log-guloso/");
+
+        if(!file.exists()){
+            file.mkdir();
+        }
+    }
 
     //#region Menu
     /**
@@ -183,6 +191,7 @@ final class Guloso {
 
                 switch (opcao) {
                     case 1:
+                        criarPastaLog();
                         System.out
                                 .println("\n\nO algoritmo será executado com instancias crescentes de 4 a 1.048.576 produtos");
                         System.out.println(

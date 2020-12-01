@@ -1,6 +1,7 @@
 package app.algoritmos;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -280,7 +281,7 @@ final class ForcaBruta {
     public static void gravarInstancia(int instancia, int possibilidades, int possibilidadesValidas,
             CarrinhoSupermercado carrinho, StringBuffer logTempo) {
 
-        String path = "src/app/algoritmos/log-fb/Instancia_" + instancia + "Produtos.txt";
+        String path = "log-fb/Instancia_" + instancia + "Produtos.txt";
 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
             carrinho.saveToFile(bw);
@@ -303,7 +304,7 @@ final class ForcaBruta {
      */
     public static void gravarMaiorConjunto(ListaProdutos lista, StringBuffer logTempo, int tamanhoInstancia) {
 
-        String path = "src/app/algoritmos/log-fb/Maior-Conjunto-5Segundos.txt";
+        String path = "log-fb/Maior-Conjunto-5Segundos.txt";
 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
             bw.write("- Maior Conjunto Encontrado no Tempo limite de 5 segundos -");
@@ -317,6 +318,13 @@ final class ForcaBruta {
     }
     // #endregion
 
+    public static void criarPastaLog(){
+        File file = new File("log-fb/");
+
+        if(!file.exists()){
+            file.mkdir();
+        }
+    }
     // #region Menu
     /***
      * Menu básico p/ facilitar a execução
@@ -346,6 +354,7 @@ final class ForcaBruta {
 
                 switch (opcao) {
                     case 1:
+                        criarPastaLog();
                         System.out
                                 .println("\n\nO algoritmo será executado com instâncias crescentes de 4 a 24 produtos");
                         System.out.println(
