@@ -106,6 +106,7 @@ final class ForcaBruta {
         ArrayList<ListaProdutos> listasTemp = new ArrayList<ListaProdutos>();
 
         int tamanhoInstancia = produtos.size();
+
         int possibilidades = 0;
         int possibilidadesValidas = 0;
 
